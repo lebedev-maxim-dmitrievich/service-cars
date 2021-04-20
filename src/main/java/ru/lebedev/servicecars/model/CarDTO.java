@@ -1,22 +1,24 @@
 package ru.lebedev.servicecars.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "cars")
 public class CarDTO {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "brande")
     private String brande;
+    @Column(name = "model")
     private String model;
+    @Column(name = "mileage")
     private double mileage;
+    @Column(name = "yearProduction")
     private int yearProduction;
+    @Column(name = "cost")
     private double cost;
-
-    public CarDTO(int id, String brande, String model, double mileage, int yearProduction, double cost) {
-        this.id = id;
-        this.brande = brande;
-        this.model = model;
-        this.mileage = mileage;
-        this.yearProduction = yearProduction;
-        this.cost = cost;
-    }
 
     public String getBrande() {
         return brande;
@@ -64,5 +66,17 @@ public class CarDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "CarDTO{" +
+                "id=" + id +
+                ", brande='" + brande + '\'' +
+                ", model='" + model + '\'' +
+                ", mileage=" + mileage +
+                ", yearProduction=" + yearProduction +
+                ", cost=" + cost +
+                '}';
     }
 }
