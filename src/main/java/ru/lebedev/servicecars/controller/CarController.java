@@ -11,8 +11,12 @@ import ru.lebedev.servicecars.service.CarService;
 @RestController
 public class CarController {
 
+    private final CarService carService;
+
     @Autowired
-    private CarService carService;
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     @PostMapping
     public void addCar(@RequestParam int id, @RequestParam String brande, @RequestParam String model,
