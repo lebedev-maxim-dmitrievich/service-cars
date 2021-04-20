@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.lebedev.servicecars.model.CarDTO;
 import ru.lebedev.servicecars.repository.CarRepository;
+
 import java.util.Optional;
 
 @RestController
@@ -17,36 +18,27 @@ public class CarController {
     }
 
     @PostMapping
-    public void addCar(@RequestParam String brande, @RequestParam String model, @RequestParam double mileage,
-                       @RequestParam int yearProduction, @RequestParam double cost) {
-        CarDTO carDTO = new CarDTO();
-        carDTO.setBrande(brande);
-        carDTO.setModel(model);
-        carDTO.setMileage(mileage);
-        carDTO.setYearProduction(yearProduction);
-        carDTO.setCost(cost);
-        carRepository.save(carDTO);
+    public void addCar(@RequestBody CarDTO jsonCarDTO) {
+        if (jsonCarDTO != null) {
+            CarDTO carDTO = jsonCarDTO;
+            carRepository.save(carDTO);
+        }
     }
 
     @PutMapping
-    public void updateCar(@RequestParam Integer id, @RequestParam String brande, @RequestParam String model, @RequestParam double mileage,
-                          @RequestParam int yearProduction, @RequestParam double cost) {
-        CarDTO carDTO = carRepository.getOne(id);
-        carDTO.setBrande(brande);
-        carDTO.setModel(model);
-        carDTO.setMileage(mileage);
-        carDTO.setYearProduction(yearProduction);
-        carDTO.setCost(cost);
-        carRepository.save(carDTO);
+    public void updateCar(@RequestBody CarDTO jsonCarDTO) {
+        if (jsonCarDTO != null) {
+            carRepository.save(jsonCarDTO);
+        }
     }
 
     @GetMapping
-    public Optional<CarDTO> getCar(@RequestParam Integer id) {
-        return carRepository.findById(id);
+    public Optional<CarDTO> getCar(@RequestBody CarDTO jsonCarDTO) {
+        return carRepository.findById(jsonCarDTO.getId());
     }
 
     @DeleteMapping
-    public void deleteCar(@RequestParam Integer id) {
-        carRepository.deleteById(id);
+    public void deleteCar(@RequestBody CarDTO jsonCarDTO) {
+        carRepository.deleteById(jsonCarDTO.getId());
     }
 }
