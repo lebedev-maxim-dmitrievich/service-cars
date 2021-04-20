@@ -1,4 +1,4 @@
-package ru.lebedev.servicecars.service.implementation;
+package ru.lebedev.servicecars.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.lebedev.servicecars.model.CarDTO;
@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CarServiceInMemoryImplementation implements CarService {
+public class CarServiceInMemoryImpl implements CarService {
+
     private Map<Integer, CarDTO> cars = new HashMap<>();
 
     @Override
