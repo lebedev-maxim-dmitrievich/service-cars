@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CarDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(name = "brande")
     private String brande;
@@ -60,11 +60,11 @@ public class CarDTO {
         this.cost = cost;
     }
 
-    public int getId() {
-        return this.id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
