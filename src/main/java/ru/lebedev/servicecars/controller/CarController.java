@@ -2,13 +2,11 @@ package ru.lebedev.servicecars.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.lebedev.servicecars.dao.impl.CarService;
+import ru.lebedev.servicecars.service.CarService;
 import ru.lebedev.servicecars.dto.CarDTO;
 import ru.lebedev.servicecars.exception.PostMethodException;
 import ru.lebedev.servicecars.exception.PutMethodException;
 import ru.lebedev.servicecars.model.Car;
-
-import java.util.Optional;
 
 @RestController
 public class CarController {
@@ -52,7 +50,7 @@ public class CarController {
     }
 
     @GetMapping
-    public Optional<Car> getCar(@RequestBody CarDTO carDTO) {
+    public Car getCar(@RequestBody CarDTO carDTO) {
         return carService.get(carDTO.getId());
     }
 

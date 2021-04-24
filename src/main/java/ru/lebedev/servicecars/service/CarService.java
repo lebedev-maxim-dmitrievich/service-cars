@@ -1,21 +1,22 @@
-package ru.lebedev.servicecars.dao.impl;
+package ru.lebedev.servicecars.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.lebedev.servicecars.dao.CarDao;
 import ru.lebedev.servicecars.model.Car;
-import ru.lebedev.servicecars.repository.CarRepository;
+import ru.lebedev.servicecars.repository.CarDao;
+import ru.lebedev.servicecars.service.impl.CarServiceImpl;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class CarService implements CarDao {
+@Transactional
+public class CarService implements CarServiceImpl {
 
-    private final CarRepository carRepository;
+    private final CarDao carRepository;
 
     @Autowired
-    public CarService(CarRepository carRepository) {
+    public CarService(CarDao carRepository) {
         this.carRepository = carRepository;
     }
 
@@ -25,8 +26,8 @@ public class CarService implements CarDao {
     }
 
     @Override
-    public Optional<Car> get(Integer id) {
-        return carRepository.findById(id);
+    public Car get(Integer id) {
+        return carRepository.findById(id).get();
     }
 
     @Override

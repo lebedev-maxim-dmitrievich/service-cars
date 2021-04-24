@@ -1,13 +1,12 @@
-package ru.lebedev.servicecars.dao;
+package ru.lebedev.servicecars.service.impl;
 
 import ru.lebedev.servicecars.model.Car;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CarDao {
+public interface CarServiceImpl {
     List<Car> getAll();
-    Optional<Car> get(Integer id);
+    Car get(Integer id);
     Car save(Car car);
     void delete(Car car);
 }
