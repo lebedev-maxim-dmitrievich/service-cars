@@ -2,22 +2,22 @@ package ru.lebedev.servicecars.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.lebedev.servicecars.dao.impl.CarService;
+import ru.lebedev.servicecars.dto.CarDTO;
 import ru.lebedev.servicecars.exception.PostMethodException;
 import ru.lebedev.servicecars.exception.PutMethodException;
 import ru.lebedev.servicecars.model.Car;
-import ru.lebedev.servicecars.dto.CarDTO;
-import ru.lebedev.servicecars.repository.CarRepository;
 
 import java.util.Optional;
 
 @RestController
 public class CarController {
 
-    private final CarRepository carRepository;
+    private final CarService carService;
 
     @Autowired
-    public CarController(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    public CarController(CarService carService) {
+        this.carService = carService;
     }
 
     @PostMapping
@@ -30,7 +30,7 @@ public class CarController {
         car.setYearProduction(carDTO.getYearProduction());
 
         if (checkDataCarForEmptiness(car)) {
-            return carRepository.save(car);
+            return carService.save(car);
         }
         throw new PostMethodException();
     }
@@ -38,27 +38,29 @@ public class CarController {
     @PutMapping
     public Car updateCar(@RequestBody CarDTO carDTO) {
         Car car = new Car();
+        car.setId(carDTO.getId());
         car.setBrande(carDTO.getBrande());
         car.setCost(carDTO.getCost());
         car.setMileage(carDTO.getMileage());
         car.setModel(carDTO.getModel());
         car.setYearProduction(carDTO.getYearProduction());
+
         if (checkDataCarForEmptiness(car)) {
-            return carRepository.save(car);
+            return carService.save(car);
         }
         throw new PutMethodException();
     }
 
     @GetMapping
     public Optional<Car> getCar(@RequestBody CarDTO carDTO) {
-        return carRepository.findById(carDTO.getId());
+        return carService.get(carDTO.getId());
     }
 
     @DeleteMapping
     public boolean deleteCar(@RequestBody CarDTO carDTO) {
         Car car = new Car();
         car.setId(carDTO.getId());
-        carRepository.deleteById(car.getId());
+        carService.delete(car);
         return true;
     }
 
