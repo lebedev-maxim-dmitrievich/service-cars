@@ -8,6 +8,7 @@ public class CarDTO {
     private double mileage;
     private int yearProduction;
     private double cost;
+    private String imageBase64;
 
     public Integer getId() {
         return id;
@@ -55,5 +56,13 @@ public class CarDTO {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }

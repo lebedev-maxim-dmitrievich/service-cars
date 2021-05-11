@@ -19,6 +19,8 @@ public class Car {
     private int yearProduction;
     @Column(name = "cost")
     private double cost;
+    @Column(name = "image", columnDefinition = "VARCHAR_IGNORECASE")
+    private String imageBase64;
 
     public String getBrande() {
         return brande;
@@ -78,5 +80,13 @@ public class Car {
                 ", yearProduction=" + yearProduction +
                 ", cost=" + cost +
                 '}';
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }

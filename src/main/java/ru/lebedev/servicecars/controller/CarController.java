@@ -26,6 +26,7 @@ public class CarController {
         car.setMileage(carDTO.getMileage());
         car.setModel(carDTO.getModel());
         car.setYearProduction(carDTO.getYearProduction());
+        car.setImageBase64(carDTO.getImageBase64());
 
         if (checkDataCarForEmptiness(car)) {
             return carService.save(car);
@@ -42,6 +43,7 @@ public class CarController {
         car.setMileage(carDTO.getMileage());
         car.setModel(carDTO.getModel());
         car.setYearProduction(carDTO.getYearProduction());
+        car.setImageBase64(carDTO.getImageBase64());
 
         if (checkDataCarForEmptiness(car)) {
             return carService.save(car);
