@@ -4,51 +4,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lebedev.servicecars.mapper.CarMapper;
-import ru.lebedev.servicecars.service.CarService;
-import ru.lebedev.servicecars.dto.CarDto;
-import ru.lebedev.servicecars.model.Car;
+import ru.lebedev.servicecars.request.CarRequest;
+import ru.lebedev.servicecars.response.CarResponse;
+import ru.lebedev.servicecars.service.impl.CarServiceImpl;
 
 @RestController
+@RequestMapping("/api/cars")
 public class CarController {
 
-    private final CarService carService;
-    private final CarMapper carMapper;
+    private final CarServiceImpl carServiceImpl;
 
     @Autowired
-    public CarController(CarService carService, CarMapper carMapper) {
-        this.carService = carService;
-        this.carMapper = carMapper;
+    public CarController(CarServiceImpl carServiceImpl) {
+        this.carServiceImpl = carServiceImpl;
     }
 
-    @PostMapping("/api/cars")
-    public ResponseEntity addCar(@RequestBody CarDto carDto) {
-        Car car = carMapper.mapToCar(carDto);
-        carService.save(car);
+    @PostMapping
+    public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest) {
+        CarResponse response = carServiceImpl.create(carRequest);
 
-        return new ResponseEntity<>(car, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/cars")
-    public ResponseEntity updateCar(@RequestBody CarDto carDto) {
-        Car car = carMapper.mapToCar(carDto);
-        carService.save(car);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCar(
+            @PathVariable Integer id,
+            @RequestBody CarRequest carRequest) {
+        CarResponse response = carServiceImpl.update(carRequest, id);
 
-        return new ResponseEntity<>(car, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/api/cars")
-    public ResponseEntity getCar(@RequestBody CarDto carDto) {
-        Car car = carMapper.mapToCar(carDto);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
+        carServiceImpl.delete(id);
 
-        return new ResponseEntity<>(carService.get(car.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/api/cars")
-    public ResponseEntity deleteCar(@RequestBody CarDto carDto) {
-        Car car = carMapper.mapToCar(carDto);
-        carService.delete(car);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCar(@PathVariable Integer id) {
+        CarResponse response = carServiceImpl.get(id);
 
-        return new ResponseEntity<>("User deleted!", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
