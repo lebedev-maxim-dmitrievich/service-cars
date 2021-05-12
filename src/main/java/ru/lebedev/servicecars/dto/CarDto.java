@@ -1,6 +1,6 @@
 package ru.lebedev.servicecars.dto;
 
-public class CarDTO {
+public class CarDto {
 
     private Integer id;
     private String brande;
