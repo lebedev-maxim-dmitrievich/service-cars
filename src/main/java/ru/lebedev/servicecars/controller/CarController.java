@@ -1,71 +1,54 @@
 package ru.lebedev.servicecars.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.lebedev.servicecars.mapper.CarMapper;
 import ru.lebedev.servicecars.service.CarService;
-import ru.lebedev.servicecars.dto.CarDTO;
-import ru.lebedev.servicecars.exception.PostMethodException;
-import ru.lebedev.servicecars.exception.PutMethodException;
+import ru.lebedev.servicecars.dto.CarDto;
 import ru.lebedev.servicecars.model.Car;
 
 @RestController
 public class CarController {
 
     private final CarService carService;
+    private final CarMapper carMapper;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, CarMapper carMapper) {
         this.carService = carService;
+        this.carMapper = carMapper;
     }
 
-    @PostMapping
-    public Car addCar(@RequestBody CarDTO carDTO) {
-        Car car = new Car();
-        car.setBrande(carDTO.getBrande());
-        car.setCost(carDTO.getCost());
-        car.setMileage(carDTO.getMileage());
-        car.setModel(carDTO.getModel());
-        car.setYearProduction(carDTO.getYearProduction());
-        car.setImageBase64(carDTO.getImageBase64());
+    @PostMapping("/api/cars")
+    public ResponseEntity addCar(@RequestBody CarDto carDto) {
+        Car car = carMapper.mapToCar(carDto);
+        carService.save(car);
 
-        if (checkDataCarForEmptiness(car)) {
-            return carService.save(car);
-        }
-        throw new PostMethodException();
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
-    @PutMapping
-    public Car updateCar(@RequestBody CarDTO carDTO) {
-        Car car = new Car();
-        car.setId(carDTO.getId());
-        car.setBrande(carDTO.getBrande());
-        car.setCost(carDTO.getCost());
-        car.setMileage(carDTO.getMileage());
-        car.setModel(carDTO.getModel());
-        car.setYearProduction(carDTO.getYearProduction());
-        car.setImageBase64(carDTO.getImageBase64());
+    @PutMapping("/api/cars")
+    public ResponseEntity updateCar(@RequestBody CarDto carDto) {
+        Car car = carMapper.mapToCar(carDto);
+        carService.save(car);
 
-        if (checkDataCarForEmptiness(car)) {
-            return carService.save(car);
-        }
-        throw new PutMethodException();
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
-    @GetMapping
-    public Car getCar(@RequestBody CarDTO carDTO) {
-        return carService.get(carDTO.getId());
+    @GetMapping("/api/cars")
+    public ResponseEntity getCar(@RequestBody CarDto carDto) {
+        Car car = carMapper.mapToCar(carDto);
+
+        return new ResponseEntity<>(carService.get(car.getId()), HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public boolean deleteCar(@RequestBody CarDTO carDTO) {
-        Car car = new Car();
-        car.setId(carDTO.getId());
+    @DeleteMapping("/api/cars")
+    public ResponseEntity deleteCar(@RequestBody CarDto carDto) {
+        Car car = carMapper.mapToCar(carDto);
         carService.delete(car);
-        return true;
-    }
 
-    private boolean checkDataCarForEmptiness(Car car) {
-        return car.getBrande() != null && car.getModel() != null && !(car.getCost() <= 0.0) &&
-                !car.getBrande().equals("") && !car.getModel().equals("");
+        return new ResponseEntity<>("User deleted!", HttpStatus.OK);
     }
 }
