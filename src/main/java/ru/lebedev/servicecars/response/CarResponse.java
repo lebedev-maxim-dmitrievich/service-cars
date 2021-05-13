@@ -10,6 +10,7 @@ public class CarResponse {
     private String model;
     private double mileage;
     private int yearProduction;
+    private double costPerMinute;
     private String number;
     private byte[] photo;
 }

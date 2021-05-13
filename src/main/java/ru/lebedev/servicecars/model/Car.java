@@ -20,6 +20,8 @@ public class Car {
     @Column(name = "year_production")
     private int yearProduction;
     private String number;
+    @Column(name = "cost_per_minute")
+    private double costPerMinute;
     @Column(name = "photo_car", length = 83886080)
     private byte[] photo;
 }
