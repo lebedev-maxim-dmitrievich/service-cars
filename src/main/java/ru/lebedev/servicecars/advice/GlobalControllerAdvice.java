@@ -5,13 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.ValidateDataCarException;
+import ru.lebedev.servicecars.exception.InvalidateDataCarException;
 import ru.lebedev.servicecars.response.ErrorResponse;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler(ValidateDataCarException.class)
+    @ExceptionHandler(InvalidateDataCarException.class)
     public ResponseEntity<?> carSuitabilityExceptionHandler(Exception e) {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
