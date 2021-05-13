@@ -1,12 +1,14 @@
 package ru.lebedev.servicecars.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Data
 @Entity
+@Validated
 @Table(name = "cars")
 public class Car {
 
@@ -19,6 +21,6 @@ public class Car {
     @Column(name = "year_production")
     private int yearProduction;
     private String number;
-    @Column(name = "photo_car", length=83886080)
+    @Column(name = "photo_car", length = 83886080)
     private byte[] photo;
 }
