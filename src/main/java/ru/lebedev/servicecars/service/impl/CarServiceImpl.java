@@ -11,6 +11,7 @@ import ru.lebedev.servicecars.response.CarResponse;
 import ru.lebedev.servicecars.service.CarService;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +29,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAll() {
-        return carRepository.findAll();
+    public List<CarResponse> getAll() {
+        List<CarResponse> carResponses = new ArrayList<>();
+        for (Car car : carRepository.findAll()) {
+            carResponses.add(carMapper.mapToCarResponse(car));
+        }
+        return carResponses;
     }
 
     @Override

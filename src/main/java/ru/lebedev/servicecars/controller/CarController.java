@@ -28,7 +28,7 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<Car> response = carServiceImpl.getAll();
+        List<CarResponse> response = carServiceImpl.getAll();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

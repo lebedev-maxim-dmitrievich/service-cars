@@ -9,7 +9,7 @@ import ru.lebedev.servicecars.response.CarResponse;
 import java.util.List;
 
 public interface CarService {
-    List<Car> getAll();
+    List<CarResponse> getAll();
 
     CarResponse create(CarRequest carRequest);
 
