@@ -53,7 +53,11 @@ public class CarController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Integer id,
-            @RequestBody @Valid CarRequest carRequest) throws CarNotFoundException {
+            @RequestBody @Valid CarRequest carRequest,
+            Errors errors) throws CarNotFoundException, InvalidateDataCarException {
+        if (errors.hasErrors()) {
+            throw new InvalidateDataCarException("incorrect data");
+        }
         CarResponse response = carServiceImpl.update(carRequest, id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
