@@ -11,11 +11,11 @@ import java.util.List;
 public interface CarService {
     List<Car> getAll();
 
-    Object update(CarRequest carRequest, int id) throws CarNotFoundException;
+    CarResponse create(CarRequest carRequest);
 
     CarResponse read(int id) throws InvalidateDataCarException, CarNotFoundException;
 
-    CarResponse create(CarRequest carRequest);
+    Object update(CarRequest carRequest, int id) throws CarNotFoundException;
 
     void delete(int id) throws CarNotFoundException;
 }

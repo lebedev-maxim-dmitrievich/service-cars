@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Validated
 @Table(name = "cars")
 public class Car {
 
