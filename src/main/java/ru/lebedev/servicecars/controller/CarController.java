@@ -7,11 +7,13 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.lebedev.servicecars.exception.CarNotFoundException;
 import ru.lebedev.servicecars.exception.InvalidateDataCarException;
+import ru.lebedev.servicecars.model.Car;
 import ru.lebedev.servicecars.request.CarRequest;
 import ru.lebedev.servicecars.response.CarResponse;
 import ru.lebedev.servicecars.service.impl.CarServiceImpl;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -22,6 +24,13 @@ public class CarController {
     @Autowired
     public CarController(CarServiceImpl carServiceImpl) {
         this.carServiceImpl = carServiceImpl;
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        List<Car> response = carServiceImpl.getAll();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
