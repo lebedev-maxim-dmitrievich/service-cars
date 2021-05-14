@@ -15,6 +15,7 @@ public class CarMapper {
         carResponse.setModel(car.getModel());
         carResponse.setBrande(car.getBrande());
         carResponse.setNumber(car.getNumber());
+        carResponse.setCostPerMinute(car.getCostPerMinute());
         carResponse.setYearProduction(car.getYearProduction());
         carResponse.setPhoto(car.getPhoto());
 
@@ -27,6 +28,7 @@ public class CarMapper {
         car.setNumber(carRequest.getNumber());
         car.setMileage(carRequest.getMileage());
         car.setModel(carRequest.getModel());
+        car.setCostPerMinute(carRequest.getCostPerMinute());
         car.setYearProduction(carRequest.getYearProduction());
         car.setPhoto(carRequest.getPhoto());
 
@@ -39,6 +41,7 @@ public class CarMapper {
         car.setMileage(carRequest.getMileage());
         car.setModel(carRequest.getModel());
         car.setYearProduction(carRequest.getYearProduction());
+        car.setCostPerMinute(carRequest.getCostPerMinute());
         car.setPhoto(carRequest.getPhoto());
 
         return car;
