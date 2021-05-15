@@ -15,8 +15,6 @@ public class CarRequest implements CarRequestConstants {
     private String brande;
     @NotEmpty
     private String model;
-    @NotEmpty
-    private String status;
     @Min(0)
     @Max(500000)
     private double mileage;

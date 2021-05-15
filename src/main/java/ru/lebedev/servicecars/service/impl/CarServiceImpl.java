@@ -3,14 +3,18 @@ package ru.lebedev.servicecars.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lebedev.servicecars.exception.CarNotFoundException;
+import ru.lebedev.servicecars.exception.RepairStatusException;
+import ru.lebedev.servicecars.exception.StatusException;
 import ru.lebedev.servicecars.mapper.CarMapper;
 import ru.lebedev.servicecars.model.Car;
+import ru.lebedev.servicecars.model.enums.CarStatus;
 import ru.lebedev.servicecars.repository.CarRepository;
 import ru.lebedev.servicecars.request.CarRequest;
 import ru.lebedev.servicecars.response.CarResponse;
 import ru.lebedev.servicecars.service.CarService;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +42,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarResponse create(CarRequest carRequest) {
+    public CarResponse create(@Valid CarRequest carRequest) {
         Car car = carMapper.mapToCar(carRequest);
+        car.setStatus(CarStatus.AVAILABLE);
         carRepository.save(car);
         CarResponse response = carMapper.mapToCarResponse(car);
 
@@ -47,7 +52,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarResponse read(int id) throws CarNotFoundException {
+    public CarResponse get(int id) throws CarNotFoundException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
@@ -58,7 +63,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarResponse update(CarRequest carRequest, int id) throws CarNotFoundException {
+    public CarResponse update(@Valid CarRequest carRequest, int id) throws CarNotFoundException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
@@ -77,5 +82,59 @@ public class CarServiceImpl implements CarService {
             throw new CarNotFoundException("car not found");
         }
         carRepository.delete(carRepository.getOne(id));
+    }
+
+    @Override
+    public CarResponse bookCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty()) {
+            throw new CarNotFoundException("car not found");
+        }
+        Car car = carOptional.get();
+        if (car.getStatus().equals(CarStatus.NOT_AVAILABLE)) {
+            throw new StatusException("status already is: " + CarStatus.NOT_AVAILABLE);
+        }
+        if (car.getStatus().equals(CarStatus.IN_REPAIR)) {
+            throw new RepairStatusException("can't book car in repair");
+        }
+        car.setStatus(CarStatus.NOT_AVAILABLE);
+        carRepository.save(car);
+        CarResponse carResponse = carMapper.mapToCarResponse(car);
+
+        return carResponse;
+    }
+
+    @Override
+    public CarResponse freeCar(int id) throws CarNotFoundException, StatusException {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty()) {
+            throw new CarNotFoundException("car not found");
+        }
+        Car car = carOptional.get();
+        if (car.getStatus().equals(CarStatus.AVAILABLE)) {
+            throw new StatusException("status already is: " + CarStatus.AVAILABLE);
+        }
+        car.setStatus(CarStatus.AVAILABLE);
+        carRepository.save(car);
+        CarResponse carResponse = carMapper.mapToCarResponse(car);
+
+        return carResponse;
+    }
+
+    @Override
+    public CarResponse repairCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty()) {
+            throw new CarNotFoundException("car not found");
+        }
+        Car car = carOptional.get();
+        if (car.getStatus().equals(CarStatus.IN_REPAIR)) {
+            throw new StatusException("status already is: " + CarStatus.IN_REPAIR);
+        }
+        car.setStatus(CarStatus.IN_REPAIR);
+        carRepository.save(car);
+        CarResponse carResponse = carMapper.mapToCarResponse(car);
+
+        return carResponse;
     }
 }

@@ -1,7 +1,7 @@
 package ru.lebedev.servicecars.model;
 
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
+import ru.lebedev.servicecars.model.enums.CarStatus;
 
 import javax.persistence.*;
 
@@ -15,7 +15,8 @@ public class Car {
     private Integer id;
     private String brande;
     private String model;
-    private String status;
+    @Enumerated(value = EnumType.STRING)
+    private CarStatus status;
     private double mileage;
     @Column(name = "year_production")
     private int yearProduction;
