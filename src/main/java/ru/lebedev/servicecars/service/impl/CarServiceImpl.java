@@ -92,7 +92,7 @@ public class CarServiceImpl implements CarService {
         }
         Car car = carOptional.get();
         if (car.getStatus().equals(CarStatus.NOT_AVAILABLE)) {
-            throw new StatusException("status already is: " + CarStatus.NOT_AVAILABLE);
+            throw new StatusException("car is not available now");
         }
         if (car.getStatus().equals(CarStatus.IN_REPAIR)) {
             throw new RepairStatusException("can't book car in repair");
@@ -112,7 +112,7 @@ public class CarServiceImpl implements CarService {
         }
         Car car = carOptional.get();
         if (car.getStatus().equals(CarStatus.AVAILABLE)) {
-            throw new StatusException("status already is: " + CarStatus.AVAILABLE);
+            throw new StatusException("car is available now");
         }
         car.setStatus(CarStatus.AVAILABLE);
         carRepository.save(car);
@@ -129,7 +129,7 @@ public class CarServiceImpl implements CarService {
         }
         Car car = carOptional.get();
         if (car.getStatus().equals(CarStatus.IN_REPAIR)) {
-            throw new StatusException("status already is: " + CarStatus.IN_REPAIR);
+            throw new StatusException("car in repair now");
         }
         car.setStatus(CarStatus.IN_REPAIR);
         carRepository.save(car);
