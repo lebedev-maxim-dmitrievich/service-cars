@@ -15,6 +15,7 @@ public class Car {
     private Integer id;
     private String brande;
     private String model;
+    private String status;
     private double mileage;
     @Column(name = "year_production")
     private int yearProduction;

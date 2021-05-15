@@ -7,6 +7,7 @@ public class CarResponse {
 
     private Integer id;
     private String brande;
+    private String status;
     private String model;
     private double mileage;
     private int yearProduction;

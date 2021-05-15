@@ -11,12 +11,13 @@ public class CarMapper {
     public CarResponse mapToCarResponse(Car car) {
         CarResponse carResponse = new CarResponse();
         carResponse.setId(car.getId());
-        carResponse.setMileage(car.getMileage());
-        carResponse.setModel(car.getModel());
         carResponse.setBrande(car.getBrande());
-        carResponse.setNumber(car.getNumber());
-        carResponse.setCostPerMinute(car.getCostPerMinute());
+        carResponse.setModel(car.getModel());
+        carResponse.setStatus(car.getStatus());
+        carResponse.setMileage(car.getMileage());
         carResponse.setYearProduction(car.getYearProduction());
+        carResponse.setCostPerMinute(car.getCostPerMinute());
+        carResponse.setNumber(car.getNumber());
         carResponse.setPhoto(car.getPhoto());
 
         return carResponse;
@@ -25,11 +26,12 @@ public class CarMapper {
     public Car mapToCar(CarRequest carRequest) {
         Car car = new Car();
         car.setBrande(carRequest.getBrande());
-        car.setNumber(carRequest.getNumber());
-        car.setMileage(carRequest.getMileage());
         car.setModel(carRequest.getModel());
-        car.setCostPerMinute(carRequest.getCostPerMinute());
+        car.setStatus(carRequest.getStatus());
+        car.setMileage(carRequest.getMileage());
         car.setYearProduction(carRequest.getYearProduction());
+        car.setCostPerMinute(carRequest.getCostPerMinute());
+        car.setNumber(carRequest.getNumber());
         car.setPhoto(carRequest.getPhoto());
 
         return car;
@@ -37,11 +39,13 @@ public class CarMapper {
 
     public Car mergeIntoCar(CarRequest carRequest, Car car) {
         car.setBrande(carRequest.getBrande());
-        car.setNumber(carRequest.getNumber());
-        car.setMileage(carRequest.getMileage());
+        car.setBrande(carRequest.getBrande());
         car.setModel(carRequest.getModel());
+        car.setStatus(carRequest.getStatus());
+        car.setMileage(carRequest.getMileage());
         car.setYearProduction(carRequest.getYearProduction());
         car.setCostPerMinute(carRequest.getCostPerMinute());
+        car.setNumber(carRequest.getNumber());
         car.setPhoto(carRequest.getPhoto());
 
         return car;
