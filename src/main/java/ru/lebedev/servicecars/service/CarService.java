@@ -1,7 +1,6 @@
 package ru.lebedev.servicecars.service;
 
 import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.InvalidateDataCarException;
 import ru.lebedev.servicecars.exception.RepairStatusException;
 import ru.lebedev.servicecars.exception.StatusException;
 import ru.lebedev.servicecars.request.CarRequest;
@@ -10,11 +9,12 @@ import ru.lebedev.servicecars.response.CarResponse;
 import java.util.List;
 
 public interface CarService {
+
     List<CarResponse> getAll();
 
     CarResponse create(CarRequest carRequest);
 
-    CarResponse get(int id) throws InvalidateDataCarException, CarNotFoundException;
+    CarResponse get(int id) throws CarNotFoundException;
 
     CarResponse update(CarRequest carRequest, int id) throws CarNotFoundException;
 
