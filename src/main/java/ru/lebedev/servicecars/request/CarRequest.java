@@ -1,7 +1,6 @@
 package ru.lebedev.servicecars.request;
 
 import lombok.Data;
-import ru.lebedev.servicecars.constant.CarRequestConstants;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,7 +8,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class CarRequest implements CarRequestConstants {
+public class CarRequest {
+
+    private final String REG_EX_NUMBER = "^[АВЕКМНОРСТУХ]\\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$";
+    private final int CURRENT_YEAR = 2021;
 
     @NotEmpty
     private String brande;

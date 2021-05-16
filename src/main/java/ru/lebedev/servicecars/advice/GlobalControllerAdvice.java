@@ -6,7 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.InvalidateDataCarException;
 import ru.lebedev.servicecars.exception.RepairStatusException;
 import ru.lebedev.servicecars.exception.StatusException;
 import ru.lebedev.servicecars.response.ErrorResponse;

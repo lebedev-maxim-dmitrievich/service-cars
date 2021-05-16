@@ -3,10 +3,8 @@ package ru.lebedev.servicecars.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.InvalidateDataCarException;
 import ru.lebedev.servicecars.exception.RepairStatusException;
 import ru.lebedev.servicecars.exception.StatusException;
 import ru.lebedev.servicecars.request.CarRequest;
@@ -43,7 +41,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Integer id) throws CarNotFoundException, InvalidateDataCarException {
+    public ResponseEntity<?> get(@PathVariable Integer id) throws CarNotFoundException {
         CarResponse response = carService.get(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -33,6 +33,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public List<CarResponse> getAll() {
         List<CarResponse> carResponses = new ArrayList<>();
         for (Car car : carRepository.findAll()) {
@@ -42,6 +43,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse create(@Valid CarRequest carRequest) {
         Car car = carMapper.mapToCar(carRequest);
         car.setStatus(CarStatus.AVAILABLE);
@@ -52,6 +54,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse get(int id) throws CarNotFoundException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
@@ -63,6 +66,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse update(@Valid CarRequest carRequest, int id) throws CarNotFoundException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
@@ -76,6 +80,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public void delete(int id) throws CarNotFoundException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
@@ -85,6 +90,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse bookCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
@@ -105,6 +111,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse freeCar(int id) throws CarNotFoundException, StatusException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
@@ -122,6 +129,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public CarResponse repairCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
