@@ -33,7 +33,7 @@ public class CarController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody @Valid CarRequest carRequest) {
         CarResponse response = carService.create(carRequest);
 
@@ -47,7 +47,7 @@ public class CarController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<?> update(
             @PathVariable Integer id,
             @RequestBody @Valid CarRequest carRequest) throws CarNotFoundException {
@@ -56,7 +56,7 @@ public class CarController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable Integer id) throws CarNotFoundException {
         carService.delete(id);
 
