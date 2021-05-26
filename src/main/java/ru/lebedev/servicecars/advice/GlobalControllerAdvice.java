@@ -15,13 +15,6 @@ import ru.lebedev.servicecars.response.ValidationErrorResponseItem;
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler(InvalidateDataCarException.class)
-    public ResponseEntity<?> carSuitabilityExceptionHandler(Exception e) {
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(CarNotFoundException.class)
     public ResponseEntity<?> carNotFoundExceptionHandler(Exception e) {
         ErrorResponse response = new ErrorResponse();
