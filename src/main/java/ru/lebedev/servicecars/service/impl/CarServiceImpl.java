@@ -2,9 +2,7 @@ package ru.lebedev.servicecars.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.RepairStatusException;
-import ru.lebedev.servicecars.exception.StatusException;
+import ru.lebedev.servicecars.exception.*;
 import ru.lebedev.servicecars.mapper.CarMapper;
 import ru.lebedev.servicecars.model.Car;
 import ru.lebedev.servicecars.model.enums.CarStatus;
@@ -67,12 +65,15 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public CarResponse update(@Valid CarRequest carRequest, int id) throws CarNotFoundException {
+    public CarResponse update(@Valid CarRequest carRequest, int id) throws CarNotFoundException, UpdateCarException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
         }
         Car car = carOptional.get();
+        if (car.getStatus().equals(CarStatus.NOT_AVAILABLE)) {
+            throw new UpdateCarException("can't update car, car not available");
+        }
         carRepository.save(carMapper.mergeIntoCar(carRequest, car));
         CarResponse response = carMapper.mapToCarResponse(car);
 
@@ -81,10 +82,14 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public void delete(int id) throws CarNotFoundException {
+    public void delete(int id) throws CarNotFoundException, DeleteCarException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
+        }
+        Car car = carOptional.get();
+        if (car.getStatus().equals(CarStatus.NOT_AVAILABLE)) {
+            throw new DeleteCarException("can't delete car, car not available");
         }
         carRepository.delete(carRepository.getOne(id));
     }

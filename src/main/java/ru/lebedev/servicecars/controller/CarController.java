@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.RepairStatusException;
-import ru.lebedev.servicecars.exception.StatusException;
+import ru.lebedev.servicecars.exception.*;
 import ru.lebedev.servicecars.request.CarRequest;
 import ru.lebedev.servicecars.response.CarResponse;
 import ru.lebedev.servicecars.service.CarService;
@@ -50,14 +48,14 @@ public class CarController {
     @PutMapping("/{id}/update")
     public ResponseEntity<?> update(
             @PathVariable Integer id,
-            @RequestBody @Valid CarRequest carRequest) throws CarNotFoundException {
+            @RequestBody @Valid CarRequest carRequest) throws CarNotFoundException, UpdateCarException {
         CarResponse response = carService.update(carRequest, id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<?> delete(@PathVariable Integer id) throws CarNotFoundException {
+    public ResponseEntity<?> delete(@PathVariable Integer id) throws CarNotFoundException, DeleteCarException {
         carService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

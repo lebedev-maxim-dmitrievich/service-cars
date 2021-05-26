@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.lebedev.servicecars.exception.CarNotFoundException;
-import ru.lebedev.servicecars.exception.RepairStatusException;
-import ru.lebedev.servicecars.exception.StatusException;
+import ru.lebedev.servicecars.exception.*;
 import ru.lebedev.servicecars.response.ErrorResponse;
 import ru.lebedev.servicecars.response.ValidationErrorResponse;
 import ru.lebedev.servicecars.response.ValidationErrorResponseItem;
@@ -34,6 +32,20 @@ public class GlobalControllerAdvice {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DeleteCarException.class)
+    public ResponseEntity<?> deleteCarExceptionHandler(Exception e) {
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UpdateCarException.class)
+    public ResponseEntity<?> updateCarExceptionHandler(Exception e) {
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
