@@ -62,7 +62,7 @@ public class CarController {
     }
 
     @PutMapping("/{id}/book")
-    public ResponseEntity<?> bookCar(@PathVariable Integer id) throws CarNotFoundException, StatusException, RepairStatusException {
+    public ResponseEntity<?> bookCar(@PathVariable Integer id) throws CarNotFoundException, StatusException {
         CarResponse response = carService.bookCar(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -76,7 +76,7 @@ public class CarController {
     }
 
     @PutMapping("/{id}/repair")
-    public ResponseEntity<?> repairCar(@PathVariable Integer id) throws CarNotFoundException, StatusException, RepairStatusException {
+    public ResponseEntity<?> repairCar(@PathVariable Integer id) throws CarNotFoundException, StatusException {
         CarResponse response = carService.repairCar(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

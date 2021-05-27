@@ -24,14 +24,7 @@ public class GlobalControllerAdvice {
     public ResponseEntity<?> statusExceptionHandler(Exception e) {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(RepairStatusException.class)
-    public ResponseEntity<?> repairStatusExceptionHandler(Exception e) {
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DeleteCarException.class)

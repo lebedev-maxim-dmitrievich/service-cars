@@ -18,10 +18,10 @@ public interface CarService {
 
     void delete(int id) throws CarNotFoundException, DeleteCarException;
 
-    CarResponse bookCar(int id) throws CarNotFoundException, StatusException, RepairStatusException;
+    CarResponse bookCar(int id) throws CarNotFoundException, StatusException;
 
     CarResponse freeCar(int id) throws CarNotFoundException, StatusException;
 
-    CarResponse repairCar(int id) throws CarNotFoundException, StatusException, RepairStatusException;
+    CarResponse repairCar(int id) throws CarNotFoundException, StatusException;
 
 }

@@ -96,7 +96,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public CarResponse bookCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
+    public CarResponse bookCar(int id) throws CarNotFoundException, StatusException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
@@ -106,7 +106,7 @@ public class CarServiceImpl implements CarService {
             throw new StatusException("car is not available now");
         }
         if (car.getStatus().equals(CarStatus.IN_REPAIR)) {
-            throw new RepairStatusException("can't book car in repair");
+            throw new StatusException("can't book car in repair");
         }
         car.setStatus(CarStatus.NOT_AVAILABLE);
         carRepository.save(car);
@@ -135,7 +135,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public CarResponse repairCar(int id) throws CarNotFoundException, StatusException, RepairStatusException {
+    public CarResponse repairCar(int id) throws CarNotFoundException, StatusException {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
             throw new CarNotFoundException("car not found");
